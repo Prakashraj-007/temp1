@@ -1,0 +1,41 @@
+.App {
+  width: 100%;
+}
+
+.container {
+  margin-top: 1.5rem;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.table {
+  width: 100%;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  font-size: 20px;
+}
+
+.table th {
+  font-weight: 600;
+}
+
+.form-control {
+  height: 50px;
+  font-size: 18px;
+}
+
+.btn {
+  height: 50px;
+  font-size: 18px;
+}
