@@ -51,3 +51,4 @@ Run the following command in the terminal:
 ```bash
 npm start
 ```
+DISABLE_ESLINT_PLUGIN=true
