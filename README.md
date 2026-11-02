@@ -1,42 +1,53 @@
-1. Edit package.json
+### Steps to Follow in the Exam (In Order)
 
-Add homepage at the top level, and add the eslint-patch pin in devDependencies:
+**Step 1: Edit `package.json`**
 
+Add the following property at the top level:
 
-
-json
+```json
 "homepage": "/proxy/8081",
+```
 
-
-json
+Add the following entries inside `devDependencies`:
+
+```json
 "devDependencies": {
   "@rushstack/eslint-patch": "1.5.1",
   "jest-fetch-mock": "^3.0.3"
 }
-2. Install dependencies
+```
 
+**Step 2: Install Dependencies**
 
-
-bash
+Run these commands in the terminal:
+
+```bash
 rm -rf node_modules package-lock.json
 npm install
-3. Create src/setupProxy.js
+```
 
+**Step 3: Create `src/setupProxy.js`**
 
-
-js
+Create a new file named `setupProxy.js` inside the `src` folder and paste the following code:
+
+```javascript
 module.exports = function (app) {
   app.use((req, res, next) => {
     const prefix = "/proxy/8081";
+
     if (!req.url.startsWith(prefix)) {
       req.url = prefix + req.url;
     }
+
     next();
   });
 };
-4. Start the app
+```
 
+**Step 4: Start the Application**
 
-
-bash
+Run the following command in the terminal:
+
+```bash
 npm start
+```
