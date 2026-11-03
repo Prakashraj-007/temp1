@@ -201,3 +201,114 @@ document.addEventListener("DOMContentLoaded", function () {
         currentColorDisplay.textContent = "Black";
     });
 });
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const studentNameInput = document.getElementById('studentName');
+    const subjectRadios = document.querySelectorAll('input[name="subject"]');
+    const subjectDisplay = document.getElementById('subjectDisplay');
+    const topicCheckboxes = document.querySelectorAll('.topic-checkbox');
+    const topicList = document.getElementById('topicList');
+
+    const q1radios = document.querySelectorAll('input[name="q1"]');
+    const q2radios = document.querySelectorAll('input[name="q2"]');
+    const q3radios = document.querySelectorAll('input[name="q3"]');
+
+    const submitQuizBtn = document.getElementById('submitQuizBtn');
+    const resetQuizBtn = document.getElementById('resetQuizBtn');
+
+    const quizScore = document.getElementById('quizScore');
+    const quizGrade = document.getElementById('quizGrade');
+    const quizRemark = document.getElementById('quizRemark');
+
+    let idx = 0;
+    while (idx < subjectRadios.length) {
+        const radio = subjectRadios[idx];
+        radio.addEventListener('change', () => {
+            if (radio.checked) {
+                subjectDisplay.textContent = radio.value;
+            }
+        });
+        idx++;
+    }
+
+    submitQuizBtn.addEventListener('click', () => {
+        const questions = [
+            { radios: q1radios, correct: 'a' },
+            { radios: q2radios, correct: 'b' },
+            { radios: q3radios, correct: 'c' }
+        ];
+
+        let score = 0;
+
+        for (let i = 0; i < questions.length; i++) {
+            const currentQ = questions[i];
+            for (let j = 0; j < currentQ.radios.length; j++) {
+                if (currentQ.radios[j].checked && currentQ.radios[j].value === currentQ.correct) {
+                    score++;
+                }
+            }
+        }
+
+        quizScore.textContent = score;
+
+        if (score === 3) {
+            quizGrade.textContent = 'A';
+        } else if (score === 2) {
+            quizGrade.textContent = 'B';
+        } else if (score === 1) {
+            quizGrade.textContent = 'C';
+        } else {
+            quizGrade.textContent = 'F';
+        }
+
+        let remarkText = '';
+        let step = 0;
+        do {
+            if (step === 0) {
+                if (score === 3) remarkText = 'Excellent';
+                else if (score === 2) remarkText = 'Good';
+                else if (score === 1) remarkText = 'Needs Improvement';
+                else remarkText = 'Please Try Again';
+            }
+            step++;
+        } while (step < 1);
+
+        quizRemark.textContent = remarkText;
+
+        topicList.innerHTML = '';
+        for (let k = 0; k < topicCheckboxes.length; k++) {
+            if (topicCheckboxes[k].checked) {
+                const li = document.createElement('li');
+                li.textContent = topicCheckboxes[k].value;
+                topicList.appendChild(li);
+            }
+        }
+    });
+
+    resetQuizBtn.addEventListener('click', () => {
+        studentNameInput.value = '';
+
+        for (let i = 0; i < subjectRadios.length; i++) {
+            subjectRadios[i].checked = false;
+        }
+
+        subjectDisplay.textContent = 'None';
+
+        const allQuizRadios = [...q1radios, ...q2radios, ...q3radios];
+        for (let i = 0; i < allQuizRadios.length; i++) {
+            allQuizRadios[i].checked = false;
+        }
+
+        for (let i = 0; i < topicCheckboxes.length; i++) {
+            topicCheckboxes[i].checked = false;
+        }
+
+        quizScore.textContent = '0';
+        quizGrade.textContent = '-';
+        quizRemark.textContent = '-';
+        topicList.innerHTML = '';
+    });
+});
